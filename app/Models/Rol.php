@@ -10,7 +10,6 @@ class Rol extends Nomenclador
     {
         return $this->belongsToMany(Trabajador::class, 'rol_trabajadors', 'rol_id', 'trabajador_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 }

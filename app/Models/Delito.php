@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Delito extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'delitos';
 
     protected $fillable = [
@@ -23,10 +20,8 @@ class Delito extends Model
         'fecha'         => 'date',
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
-        'deleted_at'    => 'datetime',
     ];
 
-    // Trabajador al que pertenece el delito
     public function trabajador()
     {
         return $this->belongsTo(Trabajador::class, 'trabajador_id');

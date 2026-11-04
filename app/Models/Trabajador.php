@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Trabajador extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'trabajadors';
 
     protected $fillable = [
@@ -41,29 +38,25 @@ class Trabajador extends Model
     ];
 
     protected $casts = [
-        'grado_mil_id'          => 'integer',
-        'escolaridad_id'        => 'integer',
-        'categoria_doc_id'      => 'integer',
-        'categoria_cien_id'     => 'integer',
-        'categoria_trop_id'     => 'integer',
-        'categoria_acad_id'     => 'integer',
-        'registrador_id'        => 'integer',
-        'verificador_id'        => 'integer',
-        'aprobador_id'          => 'integer',
-        'disposicion_extranjero'=> 'boolean',
-        'objetado'              => 'boolean',
-        'fecha_captacion'       => 'date',
-        'fecha_verificacion'    => 'date',
-        'fecha_aprobacion'      => 'date',
-        'created_at'            => 'datetime',
-        'updated_at'            => 'datetime',
-        'deleted_at'            => 'datetime',
+        'grado_mil_id'           => 'integer',
+        'escolaridad_id'         => 'integer',
+        'categoria_doc_id'       => 'integer',
+        'categoria_cien_id'      => 'integer',
+        'categoria_trop_id'      => 'integer',
+        'categoria_acad_id'      => 'integer',
+        'registrador_id'         => 'integer',
+        'verificador_id'         => 'integer',
+        'aprobador_id'           => 'integer',
+        'disposicion_extranjero' => 'boolean',
+        'objetado'               => 'boolean',
+        'fecha_captacion'        => 'date',
+        'fecha_verificacion'     => 'date',
+        'fecha_aprobacion'       => 'date',
+        'created_at'             => 'datetime',
+        'updated_at'             => 'datetime',
     ];
 
-    // ============================
-    // Relaciones hacia nomencladores
-    // ============================
-
+    // Nomencladores
     public function gradoMil()
     {
         return $this->belongsTo(GradoMil::class, 'grado_mil_id');
@@ -94,10 +87,7 @@ class Trabajador extends Model
         return $this->belongsTo(CategoriaAcad::class, 'categoria_acad_id');
     }
 
-    // ============================
     // Roles del proceso
-    // ============================
-
     public function registrador()
     {
         return $this->belongsTo(Trabajador::class, 'registrador_id');
@@ -123,10 +113,7 @@ class Trabajador extends Model
         return $this->hasMany(Trabajador::class, 'aprobador_id');
     }
 
-    // ============================
     // Cuenta y roles
-    // ============================
-
     public function cuenta()
     {
         return $this->hasOne(Cuenta::class, 'trabajador_id');
@@ -136,14 +123,10 @@ class Trabajador extends Model
     {
         return $this->belongsToMany(Rol::class, 'rol_trabajadors', 'trabajador_id', 'rol_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 
-    // ============================
     // Ocupación de plazas
-    // ============================
-
     public function ocupacions()
     {
         return $this->hasMany(Ocupacion::class, 'trabajador_id');
@@ -165,46 +148,36 @@ class Trabajador extends Model
         return $this->plazaActual?->entidad;
     }
 
-    // ============================
-    // Relaciones M:M (pivotes)
-    // ============================
-
+    // Pivotes M:M
     public function accesos()
     {
         return $this->belongsToMany(Acceso::class, 'acceso_trabajadors', 'trabajador_id', 'acceso_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 
     public function militancias()
     {
         return $this->belongsToMany(Militancia::class, 'militancia_trabajadors', 'trabajador_id', 'militancia_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 
     public function organizacions()
     {
         return $this->belongsToMany(Organizacion::class, 'organizacion_trabajadors', 'trabajador_id', 'organizacion_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 
     public function limitacions()
     {
         return $this->belongsToMany(Limitacion::class, 'limitacion_trabajadors', 'trabajador_id', 'limitacion_id')
             ->withTimestamps()
-            ->withPivot('id', 'deleted_at')
-            ->wherePivotNull('deleted_at');
+            ->withPivot('id');
     }
 
-    // ============================
-    // Hijas del trabajador
-    // ============================
-
+    // Hijas
     public function delitos()
     {
         return $this->hasMany(Delito::class, 'trabajador_id');

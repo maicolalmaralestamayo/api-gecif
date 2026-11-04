@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('observacion');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('CREATE UNIQUE INDEX entidads_numero_unique ON entidads (numero) WHERE numero IS NOT NULL');
         DB::statement('ALTER TABLE entidads ADD CONSTRAINT entidads_entidad_mayor_check CHECK (entidad_mayor >= 0)');
@@ -33,7 +32,6 @@ return new class extends Migration
             $table->string('observacion');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['nombre', 'entidad_id']);
         });
 
@@ -49,7 +47,6 @@ return new class extends Migration
             $table->string('expediente', 6)->nullable()->unique();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('ALTER TABLE verificadors ADD CONSTRAINT verificadors_carne_check CHECK (char_length(carne) = 11)');
         DB::statement('ALTER TABLE verificadors ADD CONSTRAINT verificadors_expediente_check CHECK (expediente IS NULL OR char_length(expediente) = 6)');
@@ -85,7 +82,6 @@ return new class extends Migration
             $table->date('fecha_aprobacion')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('ALTER TABLE trabajadors ADD CONSTRAINT trabajadors_carne_check CHECK (char_length(carne) = 11)');
         DB::statement('ALTER TABLE trabajadors ADD CONSTRAINT trabajadors_expediente_check CHECK (expediente IS NULL OR char_length(expediente) = 6)');
@@ -101,7 +97,6 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
 
         // 6. ocupacions
@@ -113,7 +108,6 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('ALTER TABLE ocupacions ADD CONSTRAINT ocupacions_fechas_check CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)');
         DB::statement('CREATE INDEX ocupacions_trabajador_id_idx ON ocupacions (trabajador_id)');
@@ -130,7 +124,6 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('ALTER TABLE adscripcions ADD CONSTRAINT adscripcions_fechas_check CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)');
         DB::statement('CREATE INDEX adscripcions_verificador_activa_idx ON adscripcions (verificador_id) WHERE fecha_fin IS NULL');
@@ -145,7 +138,6 @@ return new class extends Migration
             $table->date('fecha');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('CREATE INDEX delitos_trabajador_id_idx ON delitos (trabajador_id)');
 
@@ -159,7 +151,6 @@ return new class extends Migration
             $table->string('plaza');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('CREATE INDEX convivientes_trabajador_id_idx ON convivientes (trabajador_id)');
 
@@ -173,7 +164,6 @@ return new class extends Migration
             $table->boolean('mantiene_relacion');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('CREATE INDEX extranjeros_trabajador_id_idx ON extranjeros (trabajador_id)');
 
@@ -187,7 +177,6 @@ return new class extends Migration
             $table->text('sancion')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
         });
         DB::statement('CREATE INDEX sancionados_trabajador_id_idx ON sancionados (trabajador_id)');
 
@@ -199,7 +188,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'grado_acad_id']);
         });
         DB::statement('CREATE INDEX academicos_trabajador_id_idx ON academicos (trabajador_id)');
@@ -212,7 +200,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'grado_cien_id']);
         });
         DB::statement('CREATE INDEX cientificos_trabajador_id_idx ON cientificos (trabajador_id)');
@@ -224,7 +211,6 @@ return new class extends Migration
             $table->foreignId('acceso_id')->constrained('accesos')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'acceso_id']);
         });
         DB::statement('CREATE INDEX acceso_trabajadors_trabajador_id_idx ON acceso_trabajadors (trabajador_id)');
@@ -236,7 +222,6 @@ return new class extends Migration
             $table->foreignId('militancia_id')->constrained('militancias')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'militancia_id']);
         });
         DB::statement('CREATE INDEX militancia_trabajadors_trabajador_id_idx ON militancia_trabajadors (trabajador_id)');
@@ -248,7 +233,6 @@ return new class extends Migration
             $table->foreignId('organizacion_id')->constrained('organizacions')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'organizacion_id']);
         });
         DB::statement('CREATE INDEX organizacion_trabajadors_trabajador_id_idx ON organizacion_trabajadors (trabajador_id)');
@@ -260,7 +244,6 @@ return new class extends Migration
             $table->foreignId('limitacion_id')->constrained('limitacions')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'limitacion_id']);
         });
         DB::statement('CREATE INDEX limitacion_trabajadors_trabajador_id_idx ON limitacion_trabajadors (trabajador_id)');
@@ -272,7 +255,6 @@ return new class extends Migration
             $table->foreignId('militancia_id')->constrained('militancias')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['conviviente_id', 'militancia_id']);
         });
         DB::statement('CREATE INDEX militancia_convivientes_conviviente_id_idx ON militancia_convivientes (conviviente_id)');
@@ -284,7 +266,6 @@ return new class extends Migration
             $table->foreignId('organizacion_id')->constrained('organizacions')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['conviviente_id', 'organizacion_id']);
         });
         DB::statement('CREATE INDEX organizacion_convivientes_conviviente_id_idx ON organizacion_convivientes (conviviente_id)');
@@ -296,7 +277,6 @@ return new class extends Migration
             $table->foreignId('rol_id')->constrained('rols')->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
             $table->unique(['trabajador_id', 'rol_id']);
         });
         DB::statement('CREATE INDEX rol_trabajadors_trabajador_id_idx ON rol_trabajadors (trabajador_id)');

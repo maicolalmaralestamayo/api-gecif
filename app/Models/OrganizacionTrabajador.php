@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrganizacionTrabajador extends Pivot
 {
-    use SoftDeletes;
-
     protected $table = 'organizacion_trabajadors';
 
     public $incrementing = true;
@@ -20,11 +17,10 @@ class OrganizacionTrabajador extends Pivot
     ];
 
     protected $casts = [
-        'trabajador_id'  => 'integer',
+        'trabajador_id'   => 'integer',
         'organizacion_id' => 'integer',
-        'created_at'     => 'datetime',
-        'updated_at'     => 'datetime',
-        'deleted_at'     => 'datetime',
+        'created_at'      => 'datetime',
+        'updated_at'      => 'datetime',
     ];
 
     public function trabajador()

@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AccesoTrabajador extends Pivot
 {
-    use SoftDeletes;
-
     protected $table = 'acceso_trabajadors';
 
     public $incrementing = true;
@@ -24,7 +21,6 @@ class AccesoTrabajador extends Pivot
         'acceso_id'     => 'integer',
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
-        'deleted_at'    => 'datetime',
     ];
 
     public function trabajador()
