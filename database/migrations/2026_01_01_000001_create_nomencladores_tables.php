@@ -30,8 +30,8 @@ return new class extends Migration
             Schema::create($tabla, function (Blueprint $table) {
                 $table->id();
                 $table->string('nombre')->unique();
-                $table->string('descripcion');
-                $table->string('observacion');
+                $table->string('descripcion')->nullable();
+                $table->string('observacion')->nullable();
                 $table->timestamp('created_at')->useCurrent();
                 $table->timestamp('updated_at')->useCurrent();
                 $table->softDeletes();
