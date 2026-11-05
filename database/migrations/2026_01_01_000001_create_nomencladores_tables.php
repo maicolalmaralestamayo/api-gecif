@@ -21,7 +21,6 @@ return new class extends Migration
         'limitacions',
         'parentescos',
         'paiss',
-        'rols',
     ];
 
     public function up(): void

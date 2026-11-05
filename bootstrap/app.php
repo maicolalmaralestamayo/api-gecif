@@ -61,6 +61,9 @@ $app->singleton(
 
 $app->configure('app');
 
+// configuracion de los esquemas de la BD
+config(['database.connections.pgsql.search_path' => 'public,autorizacion',]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
